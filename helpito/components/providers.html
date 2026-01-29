@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Providers - Helpito</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤝</text></svg>">
+</head>
+<body>
+    <!-- Header -->
+    <div id="header"></div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" style="padding: 3rem 0; background: var(--primary-light);">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>All Service Providers</h1>
+                    <p>Browse and book from our verified local experts</p>
+                    
+                    <div class="search-section">
+                        <div class="search-container">
+                            <div class="search-bar">
+                                <input type="text" 
+                                       id="searchInput" 
+                                       class="search-input" 
+                                       placeholder="Search providers by name, service, or keyword...">
+                                <button type="button" class="search-btn">
+                                    <i class="fas fa-search"></i> Search
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filters -->
+        <section class="container" style="margin: 2rem auto;">
+            <div class="filter-sort" style="justify-content: center;">
+                <div class="form-group" style="min-width: 200px;">
+                    <label class="form-label">Category</label>
+                    <select id="categoryFilter" class="form-select">
+                        <option value="all">All Categories</option>
+                    </select>
+                </div>
+                
+                <div class="form-group" style="min-width: 200px;">
+                    <label class="form-label">Sort By</label>
+                    <select id="sortFilter" class="form-select">
+                        <option value="rating">Highest Rated</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="availability">Availability</option>
+                    </select>
+                </div>
+                
+                <div class="form-group" style="min-width: 200px;">
+                    <label class="form-label">Price Range</label>
+                    <select id="priceFilter" class="form-select">
+                        <option value="all">Any Price</option>
+                        <option value="0-50">Under $50</option>
+                        <option value="50-100">$50 - $100</option>
+                        <option value="100+">$100+</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- Provider Grid -->
+        <section class="provider-feed">
+            <div class="container">
+                <div class="feed-header">
+                    <h2 id="providerCount" class="section-title">Loading Providers...</h2>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <button id="resetFilters" class="btn btn-outline">
+                            <i class="fas fa-redo"></i> Reset Filters
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="providerFeed" class="provider-grid">
+                    <!-- Provider cards will be loaded here -->
+                </div>
+                
+                <div class="text-center mt-4">
+                    <button id="loadMore" class="btn btn-outline" style="display: none;">
+                        <i class="fas fa-plus"></i> Load More Providers
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer"></div>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Book Service</h2>
+                <button class="close-modal" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="statusMessage" class="status-message"></div>
+                
+                <form id="bookingForm">
+                    <div class="form-group">
+                        <label for="customerName" class="form-label required">Full Name</label>
+                        <input type="text" id="customerName" class="form-input" required placeholder="Enter your full name">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="customerEmail" class="form-label required">Email Address</label>
+                            <input type="email" id="customerEmail" class="form-input" required placeholder="your.email@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="customerPhone" class="form-label required">Phone Number</label>
+                            <input type="tel" id="customerPhone" class="form-input" required placeholder="+1 (123) 456-7890">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customerAddress" class="form-label required">Service Address</label>
+                        <input type="text" id="customerAddress" class="form-input" required placeholder="Enter the complete address where service is needed">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="serviceTime" class="form-label required">Preferred Date & Time</label>
+                        <input type="datetime-local" id="serviceTime" class="form-input" required>
+                        <small style="color: var(--gray); display: block; margin-top: 0.5rem;">
+                            <i class="fas fa-info-circle"></i> Provider will confirm exact timing
+                        </small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="note" class="form-label">Additional Notes (Optional)</label>
+                        <textarea id="note" class="form-textarea" placeholder="Any special requirements, instructions, or details about the service..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-full" id="submitBtn">
+                        <span class="btn-text">Submit Booking Request</span>
+                        <div class="spinner" style="display: none;"></div>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/script.js"></script>
+    <script>
+        // Enhanced providers page functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load header and footer
+            fetch('header.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('header').innerHTML = data;
+                    initializeHeader();
+                    
+                    // Update active nav link
+                    const navLinks = document.querySelectorAll('.nav-link');
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.href.includes('providers.html')) {
+                            link.classList.add('active');
+                        }
+                    });
+                });
+            
+            fetch('footer.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('footer').innerHTML = data;
+                });
+            
+            // Initialize providers page
+            initializeProvidersPage();
+        });
+        
+        function initializeHeader() {
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('navMenu');
+            
+            if (hamburger && navMenu) {
+                hamburger.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                    hamburger.classList.toggle('active');
+                });
+            }
+        }
+        
+        function initializeProvidersPage() {
+            // Get category from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const categoryParam = urlParams.get('category');
+            
+            if (categoryParam) {
+                selectedCategory = categoryParam;
+                if (categoryFilter) {
+                    categoryFilter.value = categoryParam;
+                }
+            }
+            
+            // Render providers
+            renderProviderFeed();
+            
+            // Update provider count
+            updateProviderCount();
+            
+            // Add reset filters button handler
+            const resetFiltersBtn = document.getElementById('resetFilters');
+            if (resetFiltersBtn) {
+                resetFiltersBtn.addEventListener('click', function() {
+                    selectedCategory = 'all';
+                    sortBy = 'rating';
+                    
+                    if (categoryFilter) categoryFilter.value = 'all';
+                    if (sortFilter) sortFilter.value = 'rating';
+                    
+                    const priceFilter = document.getElementById('priceFilter');
+                    if (priceFilter) priceFilter.value = 'all';
+                    
+                    if (searchInput) searchInput.value = '';
+                    
+                    renderProviderFeed();
+                    updateProviderCount();
+                });
+            }
+            
+            // Add price filter handler
+            const priceFilter = document.getElementById('priceFilter');
+            if (priceFilter) {
+                priceFilter.addEventListener('change', function() {
+                    renderProviderFeed();
+                    updateProviderCount();
+                });
+            }
+        }
+        
+        function updateProviderCount() {
+            const providerCountElement = document.getElementById('providerCount');
+            if (!providerCountElement) return;
+            
+            // Count visible providers
+            const visibleProviders = document.querySelectorAll('.provider-card:not([style*="display: none"])').length;
+            const totalProviders = providers.length;
+            
+            providerCountElement.textContent = `${visibleProviders} of ${totalProviders} Providers`;
+        }
+    </script>
+</body>
+</html>
